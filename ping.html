@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ping /orders/summary</title>
+</head>
+<body>
+  <h1>Test /orders/summary</h1>
+  <button id="pingBtn">Ping /orders/summary</button>
+  <pre id="result"></pre>
+
+  <script>
+    const btn = document.getElementById('pingBtn');
+    const result = document.getElementById('result');
+
+    btn.addEventListener('click', async () => {
+      result.textContent = 'Loading...';
+
+      try {
+        const response = await fetch('http://localhost:3000/orders/summary', {
+          method: 'GET',
+          headers: {
+            'Authorization': 'Bearer <tokenของคุณ>', // ใส่ token จริง
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
+        const data = await response.json();
+        result.textContent = JSON.stringify(data, null, 2);
+
+      } catch (err) {
+        result.textContent = 'Error: ' + err.message;
+      }
+    });
+  </script>
+</body>
+</html>
